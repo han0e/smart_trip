@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  --foreground-rgb: 26, 26, 26; /* 라이트 그레이쉬 블랙 */
+  --background-start-rgb:
+    248, 249, 250; /* 거의 화이트에 가까운 아주 연한 그레이 */
+  --background-end-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
+  -webkit-font-smoothing: antialiased; /* 가브리엘 스타일의 서체 렌더링 최적화 */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 스크롤바 커스텀: 미니멀 라이트 테마 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8f9fa;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* slate-300 */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1a1a1a;
+}
+
+/* 다크모드 스크롤바 */
+.dark ::-webkit-scrollbar-track {
+  background: #0f1117;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155; /* slate-700 */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569; /* slate-600 */
+}
+
+/* 테마 전환 시 부드러운 색상 애니메이션 - transform/opacity는 건드리지 않음 */
+html * {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 400ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 단, transition-all 또는 별도 transition을 가진 요소는 override 허용 */
+html *[class*="transition-"] {
+  transition-property: all;
+}
