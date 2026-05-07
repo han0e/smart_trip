@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   DolphinIcon,
   PineappleIcon,
@@ -37,10 +37,6 @@ import {
   BedDouble,
   Fish,
   Cloud,
-  WavesLadder,
-  PlaneLanding,
-  BaggageClaim,
-  PlaneTakeoff,
   Bus,
   Wallet,
   X,
@@ -290,24 +286,7 @@ const OkinawaTrip = () => {
 
   // itinerary constant was removed and replaced by state
 
-  const [activeAnimations, setActiveAnimations] = useState<
-    {
-      id: number;
-      cardKey: string;
-      type:
-        | "plane"
-        | "luggage"
-        | "cart"
-        | "pool"
-        | "meal"
-        | "camera"
-        | "boat"
-        | "churaumi"
-        | "car"
-        | "bus"
-        | "pineapple";
-    }[]
-  >([]);
+
 
   // 스크롤 감지
   useEffect(() => {
@@ -622,15 +601,7 @@ const OkinawaTrip = () => {
                               isDark ? "bg-slate-900/45" : "bg-white/45"
                             }`}
                           >
-                            <div
-                              className={
-                                /조식|소바|점심|저녁|스테이크|식당|식사|타마고|호토모토|우후야|카이센테이|블루씰|스시|맛집|출발|도착|돈키호테|빌리지|수영장|만좌모|부세나|츄라우미|파인애플|파르코|쇼핑몰|마트/.test(
-                                  schedule.title,
-                                )
-                                  ? "cursor-pointer"
-                                  : ""
-                              }
-                            >
+                            <div>
                               <div className="flex justify-between items-start">
                                 {isEditMode ? (
                                   <div className="flex items-center gap-1.5 relative">
@@ -789,7 +760,7 @@ const OkinawaTrip = () => {
                                       placeholder="일정 제목"
                                     />
                                   ) : (
-                                    <h4 className="text-xl md:text-2xl font-semibold text-black dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                    <h4 className="text-xl md:text-2xl font-semibold text-black dark:text-white tracking-tight transition-colors">
                                       {currentPlan.title}
                                     </h4>
                                   )}
@@ -895,15 +866,7 @@ const OkinawaTrip = () => {
                                 isDark ? "bg-slate-900/45" : "bg-white/45"
                               }`}
                             >
-                              <div
-                                className={
-                                  /조식|소바|점심|저녁|스테이크|식당|식사|타마고|호토모토|우후야|카이센테이|블루씰|스시|맛집|출발|도착|돈키호테|빌리지|수영장|만좌모|부세나|츄라우미|파인애플|파르코|쇼핑몰|마트/.test(
-                                    schedule.alt.title,
-                                  )
-                                    ? "cursor-pointer"
-                                    : ""
-                                }
-                              >
+                              <div>
                                 <div className="space-y-4 relative z-10">
                                   <div className="flex justify-between items-start">
                                     {isEditMode ? (
