@@ -10,22 +10,24 @@ interface BudgetEditorProps {
   setPersonCount: (count: number) => void;
   budgetNote: string;
   setBudgetNote: (note: string) => void;
+  language: "ko" | "ja";
 }
 
 interface EditableCostItem extends CostItem {
   tempId: string;
 }
 
-export const BudgetEditor: React.FC<BudgetEditorProps> = ({ 
-  initialCosts, 
+export const BudgetEditor: React.FC<BudgetEditorProps> = ({
+  initialCosts,
   onSave,
   personCount,
   setPersonCount,
   budgetNote,
-  setBudgetNote
+  setBudgetNote,
+  language,
 }) => {
-  const [costs, setCosts] = useState<EditableCostItem[]>(() => 
-    initialCosts.map((c, i) => ({ ...c, tempId: `row-${i}-${Date.now()}` }))
+  const [costs, setCosts] = useState<EditableCostItem[]>(() =>
+    initialCosts.map((c, i) => ({ ...c, tempId: `row-${i}-${Date.now()}` })),
   );
   const [isEditing, setIsEditing] = useState(false);
   const [localNote, setLocalNote] = useState(budgetNote);
@@ -46,29 +48,36 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
     return parseInt(val.replace(/[^0-9]/g, ""), 10) || 0;
   };
 
-  const updateCalculations = useCallback((currentCosts: EditableCostItem[], count: number) => {
-    let total = 0;
-    currentCosts.forEach(row => {
-      if (!row.isTotal && !row.isPerPerson) {
-        total += parseNumber(row.price);
-      }
-    });
-    const perPerson = Math.round(total / count);
-    return currentCosts.map(row => {
-      if (row.isTotal) return { ...row, price: formatNumber(total) };
-      if (row.isPerPerson) return { ...row, price: formatNumber(perPerson) };
-      return row;
-    });
-  }, []);
+  const updateCalculations = useCallback(
+    (currentCosts: EditableCostItem[], count: number) => {
+      let total = 0;
+      currentCosts.forEach((row) => {
+        if (!row.isTotal && !row.isPerPerson) {
+          total += parseNumber(row.price);
+        }
+      });
+      const perPerson = Math.round(total / count);
+      return currentCosts.map((row) => {
+        if (row.isTotal) return { ...row, price: formatNumber(total) };
+        if (row.isPerPerson) return { ...row, price: formatNumber(perPerson) };
+        return row;
+      });
+    },
+    [],
+  );
 
   useEffect(() => {
-    setCosts(prev => updateCalculations(prev, personCount));
+    setCosts((prev) => updateCalculations(prev, personCount));
   }, [personCount, updateCalculations]);
 
-  const handleCellChange = (index: number, field: keyof CostItem, value: string) => {
-    setCosts(prev => {
+  const handleCellChange = (
+    index: number,
+    field: keyof CostItem,
+    value: string,
+  ) => {
+    setCosts((prev) => {
       let newCosts = [...prev];
-      if (field === 'price') {
+      if (field === "price") {
         newCosts[index] = { ...newCosts[index], [field]: formatNumber(value) };
       } else {
         newCosts[index] = { ...newCosts[index], [field]: value };
@@ -83,14 +92,16 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
   };
 
   const addRow = () => {
-    setCosts(prev => {
+    setCosts((prev) => {
       const newCosts = [...prev];
-      const firstTotalIdx = newCosts.findIndex(c => c.isTotal || c.isPerPerson);
-      const newItem: EditableCostItem = { 
-        item: "", 
-        price: "0", 
-        note: "", 
-        tempId: `new-${Date.now()}` 
+      const firstTotalIdx = newCosts.findIndex(
+        (c) => c.isTotal || c.isPerPerson,
+      );
+      const newItem: EditableCostItem = {
+        item: "",
+        price: "0",
+        note: "",
+        tempId: `new-${Date.now()}`,
       };
       if (firstTotalIdx !== -1) newCosts.splice(firstTotalIdx, 0, newItem);
       else newCosts.push(newItem);
@@ -99,7 +110,7 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
   };
 
   const removeRow = (index: number) => {
-    setCosts(prev => {
+    setCosts((prev) => {
       const newCosts = prev.filter((_, i) => i !== index);
       return updateCalculations(newCosts, personCount);
     });
@@ -116,8 +127,12 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
     <div className="w-full">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
         <div>
-          <h3 className="text-[15px] md:text-lg font-semibold text-slate-800 dark:text-slate-200">Budget Details</h3>
-          <p className="text-[10px] md:text-xs text-slate-500 mt-0.5">자동 계산 기능 활성화됨</p>
+          <h3 className="text-[15px] md:text-lg font-semibold text-slate-800 dark:text-slate-200">
+            {language === "ko" ? "예상 총 비용" : "予想総費用"}
+          </h3>
+          <p className="text-[10px] md:text-xs text-slate-500 mt-0.5">
+            {language === "ko" ? "자동 계산 기능 활성화됨" : "自動計算機能有効"}
+          </p>
         </div>
 
         <div className="flex items-center gap-2 md:gap-4">
@@ -131,7 +146,9 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
               disabled={!isEditing}
               className="w-8 bg-transparent border-none focus:ring-0 text-[13px] font-bold text-blue-600 dark:text-blue-400 p-0 text-center disabled:opacity-70"
             />
-            <span className="text-[11px] font-medium text-slate-600 dark:text-slate-400">명</span>
+            <span className="text-[11px] font-medium text-slate-600 dark:text-slate-400">
+              {language === "ko" ? "명" : "名"}
+            </span>
           </div>
 
           <div className="flex gap-1.5">
@@ -140,7 +157,7 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
                 onClick={() => setIsEditing(true)}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-xs md:text-sm transition-all shadow-lg shadow-blue-500/20"
               >
-                <Edit2 size={14} /> 편집
+                <Edit2 size={14} /> {language === "ko" ? "편집" : "編集"}
               </button>
             ) : (
               <>
@@ -155,7 +172,7 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
                   onClick={saveChanges}
                   className="flex items-center gap-1.5 px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs md:text-sm transition-all shadow-lg shadow-green-500/20"
                 >
-                  <Check size={14} /> 저장
+                  <Check size={14} /> {language === "ko" ? "저장" : "保存"}
                 </button>
               </>
             )}
@@ -168,10 +185,18 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
         <table className="w-full text-left border-collapse table-fixed">
           <thead>
             <tr className="bg-slate-50/80 dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-700/50">
-              <th className="px-3 md:px-6 py-3 text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider w-[35%]">항목</th>
-              <th className="px-3 md:px-6 py-3 text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider w-[30%] text-right">금액</th>
-              <th className="px-3 md:px-6 py-3 text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider w-[35%]">비고</th>
-              {isEditing && <th className="px-2 py-3 text-[10px] md:text-xs font-semibold text-slate-400 uppercase w-10 text-center"></th>}
+              <th className="px-3 md:px-6 py-3 text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider w-[35%]">
+                {language === "ko" ? "항목" : "項目"}
+              </th>
+              <th className="px-3 md:px-6 py-3 text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider w-[30%] text-right">
+                {language === "ko" ? "금액" : "金額"}
+              </th>
+              <th className="px-3 md:px-6 py-3 text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider w-[35%]">
+                {language === "ko" ? "비고" : "備考"}
+              </th>
+              {isEditing && (
+                <th className="px-2 py-3 text-[10px] md:text-xs font-semibold text-slate-400 uppercase w-10 text-center"></th>
+              )}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
@@ -195,12 +220,16 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
                       <input
                         type="text"
                         value={row.item}
-                        onChange={(e) => handleCellChange(idx, "item", e.target.value)}
+                        onChange={(e) =>
+                          handleCellChange(idx, "item", e.target.value)
+                        }
                         className="w-full px-2 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg border-none focus:ring-1 focus:ring-blue-500 text-[11px] md:text-sm"
-                        placeholder="항목"
+                        placeholder={language === "ko" ? "항목" : "項目"}
                       />
                     ) : (
-                      <span className={`block truncate text-[11px] md:text-[14px] ${row.isTotal || row.isPerPerson ? "text-blue-600 dark:text-blue-400" : "text-slate-700 dark:text-slate-300"}`}>
+                      <span
+                        className={`block truncate text-[11px] md:text-[14px] ${row.isTotal || row.isPerPerson ? "text-blue-600 dark:text-blue-400" : "text-slate-700 dark:text-slate-300"}`}
+                      >
                         {row.item}
                       </span>
                     )}
@@ -210,12 +239,16 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
                       <input
                         type="text"
                         value={row.price}
-                        onChange={(e) => handleCellChange(idx, "price", e.target.value)}
+                        onChange={(e) =>
+                          handleCellChange(idx, "price", e.target.value)
+                        }
                         className="w-full px-2 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg border-none focus:ring-1 focus:ring-blue-500 text-[11px] md:text-sm text-right tabular-nums font-semibold"
                         placeholder="0"
                       />
                     ) : (
-                      <span className={`text-[11px] md:text-[14px] tabular-nums ${row.isTotal || row.isPerPerson ? "text-blue-600 dark:text-blue-400" : "text-slate-900 dark:text-white font-medium"}`}>
+                      <span
+                        className={`text-[11px] md:text-[14px] tabular-nums ${row.isTotal || row.isPerPerson ? "text-blue-600 dark:text-blue-400" : "text-slate-900 dark:text-white font-medium"}`}
+                      >
                         {row.price || "0"}
                       </span>
                     )}
@@ -225,12 +258,16 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
                       <input
                         type="text"
                         value={row.note}
-                        onChange={(e) => handleCellChange(idx, "note", e.target.value)}
+                        onChange={(e) =>
+                          handleCellChange(idx, "note", e.target.value)
+                        }
                         className="w-full px-2 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg border-none focus:ring-1 focus:ring-blue-500 text-[11px] md:text-sm"
-                        placeholder="메모"
+                        placeholder={language === "ko" ? "메모" : "メモ"}
                       />
                     ) : (
-                      <span className="block truncate text-slate-500 text-[10px] md:text-[13px]">{row.note}</span>
+                      <span className="block truncate text-slate-500 text-[10px] md:text-[13px]">
+                        {row.note}
+                      </span>
                     )}
                   </td>
                   {isEditing && (
@@ -263,7 +300,9 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
                 onChange={(e) => setLocalNote(e.target.value)}
                 className="w-full bg-white dark:bg-slate-800/50 border-amber-200 dark:border-amber-900/30 rounded-xl text-[11px] md:text-[13px] text-slate-700 dark:text-slate-300 p-2 md:p-3 focus:ring-amber-500 focus:border-amber-500"
                 rows={2}
-                placeholder="안내 문구 입력..."
+                placeholder={
+                  language === "ko" ? "안내 문구 입력..." : "案内文を入力..."
+                }
               />
             ) : (
               <p className="text-[11px] md:text-[13px] text-amber-700/80 dark:text-amber-400/80 leading-relaxed font-medium whitespace-pre-line">

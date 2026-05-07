@@ -9,6 +9,7 @@ import {
 } from "@/components/TravelIcons";
 import { BudgetEditor } from "@/components/BudgetEditor";
 import { mockCosts, mockItinerary } from "@/data/mockTrip";
+import { mockCostsJa, mockItineraryJa } from "@/data/mockTripJa";
 
 import { supabase } from "@/lib/supabase";
 
@@ -53,6 +54,7 @@ import {
   Trash2,
   Route,
   ArrowLeft,
+  Languages,
 } from "lucide-react";
 
 const OkinawaTrip = () => {
@@ -62,6 +64,23 @@ const OkinawaTrip = () => {
   const [budgetNote, setBudgetNote] = useState(
     `* 현지 기타 개인 경비는 제외된 예상액입니다.\n* 츄라우미 입장료는 방문 28일 전 예약이 필요합니다.`,
   );
+  const [language, setLanguage] = useState<"ko" | "ja">("ko");
+
+  useEffect(() => {
+    if (language === "ko") {
+      setItinerary(mockItinerary);
+      setCosts(mockCosts);
+      setBudgetNote(
+        `* 현지 기타 개인 경비는 제외된 예상액입니다.\n* 츄라우미 입장료는 방문 28일 전 예약이 필요합니다.`,
+      );
+    } else {
+      setItinerary(mockItineraryJa);
+      setCosts(mockCostsJa);
+      setBudgetNote(
+        `* 現地のその他の個人的な経費は除外された予想額です。\n* 美ら海水族館の入場料は訪問28日前の予約が必要です。`,
+      );
+    }
+  }, [language]);
 
   const [activeSection, setActiveSection] = useState("day1");
   const [isSticky, setIsSticky] = useState(false);
@@ -124,8 +143,8 @@ const OkinawaTrip = () => {
               ...day.schedules,
               {
                 time: "00:00",
-                title: "새 일정을 입력하세요",
-                desc: "상세 설명을 입력하세요",
+                title: language === "ko" ? "새 일정을 입력하세요" : "新しい予定を入力してください",
+                desc: language === "ko" ? "상세 설명을 입력하세요" : "詳細な説明を入力してください",
                 iconName: "MapPin",
                 mapQuery: "",
               },
@@ -286,8 +305,6 @@ const OkinawaTrip = () => {
 
   // itinerary constant was removed and replaced by state
 
-
-
   // 스크롤 감지
   useEffect(() => {
     const handleScroll = () => {
@@ -357,11 +374,11 @@ const OkinawaTrip = () => {
         <p className="text-sm md:text-lg font-medium text-slate-700 dark:text-slate-300 mb-3 tracking-tight"></p>
         <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-8 break-keep relative filter-[drop-shadow(0_2px_12px_rgba(0,60,120,0.15))] flex flex-wrap items-center gap-x-4">
           <span className="bg-clip-text text-transparent bg-linear-to-b from-[#004c94] to-[#2273bc] dark:from-[#f3f6f6] dark:to-[#c0c3c3]">
-            오키나와
+            {language === "ko" ? "오키나와" : "沖縄"}
           </span>{" "}
           <div className="flex items-center gap-[5px]">
             <span className="relative z-10 inline-block text-[#ffffff] dark:text-white">
-              가족여행
+              {language === "ko" ? "가족여행" : "家族旅行"}
               <span className="absolute left-0 -bottom-[3px] md:-bottom-[6px] w-full h-[12px] md:h-[24px] bg-[#8eddff] dark:bg-blue-600/60 -z-10 rounded-sm transition-all"></span>
             </span>
             <a
@@ -376,7 +393,9 @@ const OkinawaTrip = () => {
           </div>
         </h1>
         <p className="text-lg md:text-xl text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed font-light break-keep">
-          2026. 05. 21 - 05. 24 (3박 4일)
+          {language === "ko"
+            ? "2026. 05. 21 - 05. 24 (3박 4일)"
+            : "2026. 05. 21 - 05. 24 (3泊4日)"}
         </p>
       </header>
 
@@ -429,14 +448,14 @@ const OkinawaTrip = () => {
                   <button
                     onClick={addDay}
                     className="p-1.5 md:p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-full transition-all"
-                    title="일차 추가"
+                    title={language === "ko" ? "일차 추가" : "日次を追加"}
                   >
                     <Plus size={18} />
                   </button>
                   <button
                     onClick={saveAllData}
                     className="p-1.5 md:p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-full transition-all"
-                    title="변경사항 저장"
+                    title={language === "ko" ? "변경사항 저장" : "変更を保存"}
                   >
                     <Save size={18} />
                   </button>
@@ -456,7 +475,7 @@ const OkinawaTrip = () => {
                   ? "bg-slate-200 dark:bg-slate-800 text-black dark:text-white"
                   : "text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white"
               }`}
-              title="메뉴"
+              title={language === "ko" ? "메뉴" : "メニュー"}
             >
               <MenuIcon size={18} />
             </button>
@@ -484,7 +503,7 @@ const OkinawaTrip = () => {
                         className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors"
                       >
                         <Wallet size={20} className="text-blue-500" />
-                        여행 비용
+                        {language === "ko" ? "여행 비용" : "旅行費用"}
                       </button>
                       <button
                         onClick={() => {
@@ -494,7 +513,7 @@ const OkinawaTrip = () => {
                         className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors"
                       >
                         <ClipboardCheck size={20} className="text-green-500" />
-                        준비물 체크
+                        {language === "ko" ? "준비물 체크" : "持ち物チェック"}
                       </button>
                       <div className="h-px bg-slate-100 dark:bg-slate-800 my-1" />
                       <button
@@ -513,7 +532,13 @@ const OkinawaTrip = () => {
                         ) : (
                           <Lock size={20} />
                         )}
-                        {isEditMode ? "편집 모드 종료" : "편집 모드 시작"}
+                        {isEditMode
+                          ? language === "ko"
+                            ? "편집 모드 종료"
+                            : "編集モード終了"
+                          : language === "ko"
+                            ? "편집 모드 시작"
+                            : "編集モード開始"}
                       </button>
                     </div>
                   </motion.div>
@@ -522,6 +547,14 @@ const OkinawaTrip = () => {
             </AnimatePresence>
           </div>
 
+          <button
+            onClick={() => setLanguage(language === "ko" ? "ja" : "ko")}
+            className="p-1 md:p-1.5 shrink-0 rounded-full transition-all text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white mr-1 font-bold flex items-center justify-center w-6 h-6 md:w-8 md:h-8 text-[13px] md:text-[14px]"
+            aria-label="Toggle Language"
+            title="언어 전환 / 言語切り替え"
+          >
+            {language === "ko" ? "あ" : "Ko"}
+          </button>
           <button
             onClick={toggleTheme}
             className="p-1 md:p-1.5 shrink-0 rounded-full transition-all text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white"
@@ -774,7 +807,7 @@ const OkinawaTrip = () => {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="px-2.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all flex items-center justify-center shrink-0 group/route gap-1"
-                                        title={`${schedule.title} 길찾기 (현재 위치에서)`}
+                                        title={language === "ko" ? `${schedule.title} 길찾기 (현재 위치에서)` : `${schedule.title} 道案内 (現在地から)`}
                                         onClick={(e) => e.stopPropagation()}
                                       >
                                         <Route
@@ -782,7 +815,7 @@ const OkinawaTrip = () => {
                                           className="group-hover/route:rotate-12 transition-transform"
                                         />
                                         <span className="text-[12px] font-semibold tracking-tight">
-                                          길찾기
+                                          {language === "ko" ? "길찾기" : "道案内"}
                                         </span>
                                       </a>
                                     )}
@@ -794,7 +827,7 @@ const OkinawaTrip = () => {
                                       target="_blank"
                                       rel="noopener noreferrer"
                                       className="px-2.5 py-1.5 rounded-full bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500 hover:text-white dark:hover:bg-amber-500 dark:hover:text-white transition-all flex items-center justify-center shrink-0 gap-1"
-                                      title="공식 홈페이지 확인"
+                                      title={language === "ko" ? "공식 홈페이지 확인" : "公式ホームページ"}
                                       onClick={(e) => e.stopPropagation()}
                                     >
                                       <span className="text-[12px] font-semibold tracking-tight">
@@ -823,7 +856,7 @@ const OkinawaTrip = () => {
                                         )
                                       }
                                       className="flex-1 bg-transparent border-none focus:ring-0 text-[14px] text-slate-700 dark:text-slate-200 p-0 placeholder:text-slate-400"
-                                      placeholder="목적지 (구글 지도 검색어)"
+                                      placeholder={language === "ko" ? "목적지 (구글 지도 검색어)" : "目的地 (Googleマップ検索語)"}
                                     />
                                   </div>
                                 )}
@@ -1028,7 +1061,7 @@ const OkinawaTrip = () => {
                                           target="_blank"
                                           rel="noopener noreferrer"
                                           className="px-2.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all flex items-center justify-center shrink-0 group/route gap-1"
-                                          title={`${schedule.alt.title} 길찾기 (현재 위치에서)`}
+                                          title={language === "ko" ? `${schedule.alt.title} 길찾기 (현재 위치에서)` : `${schedule.alt.title} 道案内 (現在地から)`}
                                           onClick={(e) => e.stopPropagation()}
                                         >
                                           <Route
@@ -1036,7 +1069,9 @@ const OkinawaTrip = () => {
                                             className="group-hover/route:rotate-12 transition-transform"
                                           />
                                           <span className="text-[12px] font-semibold tracking-tight">
-                                            길찾기
+                                            {language === "ko"
+                                              ? "길찾기"
+                                              : "道案内"}
                                           </span>
                                         </a>
                                       )}
@@ -1224,7 +1259,9 @@ const OkinawaTrip = () => {
                       <Plus size={20} />
                     </div>
                     <span className="font-semibold text-[15px]">
-                      일정 추가하기
+                      {language === "ko"
+                        ? "일정 추가하기"
+                        : "スケジュールを追加"}
                     </span>
                   </motion.button>
                 )}
@@ -1281,6 +1318,7 @@ const OkinawaTrip = () => {
                     setPersonCount={setPersonCount}
                     budgetNote={budgetNote}
                     setBudgetNote={setBudgetNote}
+                    language={language}
                     onSave={(newCosts, newNote) => {
                       setCosts(newCosts);
                       if (newNote !== undefined) setBudgetNote(newNote);
