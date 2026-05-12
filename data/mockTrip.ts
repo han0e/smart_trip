@@ -88,7 +88,7 @@ export const mockItinerary: DayItinerary[] = [
       },
       {
         time: "12:20 - 13:20",
-        title: "점심: 킨치치소바",
+        title: "점심: 킨치치소바(예약X)",
         desc: "리조트에서 10분 거리, 바다 뷰가 펼쳐지는 수제 소바 맛집",
         iconName: "Utensils",
         mapQuery: "킨치치소바 오키나와",
@@ -104,7 +104,7 @@ export const mockItinerary: DayItinerary[] = [
       },
       {
         time: "18:00 - 19:30",
-        title: "저녁: 카이센 밧텐",
+        title: "저녁: 카이센 밧텐(예약완료)",
         desc: "장어덮밥 및 해산물요리. 신선한 해산물을 즐길 수 있는 로컬 맛집",
         iconName: "Utensils",
         mapQuery: "Kaisen Batten",
@@ -150,7 +150,7 @@ export const mockItinerary: DayItinerary[] = [
       },
       {
         time: "12:10 - 13:20",
-        title: "점심: 하마스시 나고점",
+        title: "점심: 하마스시 나고점(예약완료)",
         desc: "가성비 좋은 회전초밥 맛집에서 점심 식사",
         iconName: "Utensils",
         mapUrl: "https://maps.app.goo.gl/JtYim1L5rNdcu79n7",
@@ -166,7 +166,7 @@ export const mockItinerary: DayItinerary[] = [
       },
       {
         time: "18:10 - 19:30",
-        title: "저녁: 야키니쿠 킹 나고점",
+        title: "저녁: 야키니쿠 킹 나고점(예약완료)",
         desc: "무한리필 야키니쿠로 든든한 저녁 식사",
         iconName: "Utensils",
         mapQuery: "야키니쿠 킹 나고점",

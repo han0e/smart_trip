@@ -11,6 +11,7 @@ interface BudgetEditorProps {
   budgetNote: string;
   setBudgetNote: (note: string) => void;
   language: "ko" | "ja";
+  onOpenFoodDetail?: () => void;
 }
 
 interface EditableCostItem extends CostItem {
@@ -25,6 +26,7 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
   budgetNote,
   setBudgetNote,
   language,
+  onOpenFoodDetail,
 }) => {
   const [costs, setCosts] = useState<EditableCostItem[]>(() =>
     initialCosts.map((c, i) => ({ ...c, tempId: `row-${i}-${Date.now()}` })),
@@ -266,7 +268,19 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
                       />
                     ) : (
                       <span className="block truncate text-slate-500 text-[10px] md:text-[13px]">
-                        {row.note}
+                        {(row.note === "상세내역" || row.note === "詳細内訳") ? (
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (onOpenFoodDetail) onOpenFoodDetail();
+                            }}
+                            className="text-blue-500 hover:text-blue-600 underline underline-offset-2 transition-colors font-medium"
+                          >
+                            {row.note}
+                          </button>
+                        ) : (
+                          row.note
+                        )}
                       </span>
                     )}
                   </td>

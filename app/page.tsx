@@ -1,12 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import {
-  DolphinIcon,
-  PineappleIcon,
-  TravelIcon,
-  TRAVEL_ICON_NAMES,
-} from "@/components/TravelIcons";
+import { TravelIcon, TRAVEL_ICON_NAMES } from "@/components/TravelIcons";
 import { BudgetEditor } from "@/components/BudgetEditor";
 import { mockCosts, mockItinerary } from "@/data/mockTrip";
 import { mockCostsJa, mockItineraryJa } from "@/data/mockTripJa";
@@ -22,30 +17,18 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Car,
-  ShoppingBag,
   Utensils,
-  UtensilsCrossed,
-  Hotel,
-  Camera,
   Plane,
   MapPin,
   Moon,
   Sun,
-  Navigation,
   PersonStanding,
-  Sailboat,
-  ShoppingCart,
-  BedDouble,
-  Fish,
-  Cloud,
-  Bus,
   Wallet,
   X,
   ClipboardCheck,
   ExternalLink,
   ShieldCheck,
   Sparkles,
-  FerrisWheel,
   Plus,
   Save,
   Lock,
@@ -54,7 +37,6 @@ import {
   Trash2,
   Route,
   ArrowLeft,
-  Languages,
 } from "lucide-react";
 
 const OkinawaTrip = () => {
@@ -83,7 +65,6 @@ const OkinawaTrip = () => {
   }, [language]);
 
   const [activeSection, setActiveSection] = useState("day1");
-  const [isSticky, setIsSticky] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [isCostModalOpen, setIsCostModalOpen] = useState(false);
   const [isFoodDetailOpen, setIsFoodDetailOpen] = useState(false);
@@ -98,14 +79,6 @@ const OkinawaTrip = () => {
   const [activeIconPicker, setActiveIconPicker] = useState<string | null>(null);
 
   const navWrapperRef = useRef<HTMLDivElement>(null);
-
-  // Fetch data from Supabase (placeholder for now)
-  useEffect(() => {
-    const fetchData = async () => {
-      // Logic for fetching from Supabase will go here
-    };
-    fetchData();
-  }, []);
 
   const addDay = () => {
     const nextDayNum = itinerary.length + 1;
@@ -143,8 +116,14 @@ const OkinawaTrip = () => {
               ...day.schedules,
               {
                 time: "00:00",
-                title: language === "ko" ? "새 일정을 입력하세요" : "新しい予定を入力してください",
-                desc: language === "ko" ? "상세 설명을 입력하세요" : "詳細な説明を入力してください",
+                title:
+                  language === "ko"
+                    ? "새 일정을 입력하세요"
+                    : "新しい予定を入力してください",
+                desc:
+                  language === "ko"
+                    ? "상세 설명을 입력하세요"
+                    : "詳細な説明を入力してください",
                 iconName: "MapPin",
                 mapQuery: "",
               },
@@ -310,7 +289,7 @@ const OkinawaTrip = () => {
     const handleScroll = () => {
       if (navWrapperRef.current) {
         const wrapperTop = navWrapperRef.current.getBoundingClientRect().top;
-        setIsSticky(wrapperTop <= 32);
+        // isSticky logic removed as it was unused
       }
 
       const scrollPosition = window.scrollY + 250;
@@ -372,7 +351,7 @@ const OkinawaTrip = () => {
           <span>Family Trip Planner</span>
         </div>
         <p className="text-sm md:text-lg font-medium text-slate-700 dark:text-slate-300 mb-3 tracking-tight"></p>
-        <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-8 break-keep relative filter-[drop-shadow(0_2px_12px_rgba(0,60,120,0.15))] flex flex-wrap items-center gap-x-4">
+        <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-8 break-words relative filter-[drop-shadow(0_2px_12px_rgba(0,60,120,0.15))] flex flex-wrap items-center gap-x-4">
           <span className="bg-clip-text text-transparent bg-linear-to-b from-[#004c94] to-[#2273bc] dark:from-[#f3f6f6] dark:to-[#c0c3c3]">
             {language === "ko" ? "오키나와" : "沖縄"}
           </span>{" "}
@@ -392,7 +371,7 @@ const OkinawaTrip = () => {
             </a>
           </div>
         </h1>
-        <p className="text-lg md:text-xl text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed font-light break-keep">
+        <p className="text-lg md:text-xl text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed font-light break-words">
           {language === "ko"
             ? "2026. 05. 21 - 05. 24 (3박 4일)"
             : "2026. 05. 21 - 05. 24 (3泊4日)"}
@@ -723,7 +702,7 @@ const OkinawaTrip = () => {
                                           isFlipped,
                                         )
                                       }
-                                      className="bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 px-2 py-0.5 rounded-full text-[12px] font-medium w-[105px] px-3 py-1.5 rounded-xl bg-white/60 dark:bg-slate-800/60 border-blue-200/50 dark:border-blue-500/30 text-[14px] font-bold shadow-sm focus:ring-1 focus:ring-blue-500 text-center"
+                                      className="bg-white/60 dark:bg-slate-800/60 border border-blue-200/50 dark:border-blue-500/30 px-3 py-1.5 rounded-xl text-[14px] font-bold w-[105px] shadow-sm focus:ring-1 focus:ring-blue-500 text-center focus:outline-none"
                                     />
                                   </div>
                                 ) : (
@@ -807,7 +786,11 @@ const OkinawaTrip = () => {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="px-2.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all flex items-center justify-center shrink-0 group/route gap-1"
-                                        title={language === "ko" ? `${schedule.title} 길찾기 (현재 위치에서)` : `${schedule.title} 道案内 (現在地から)`}
+                                        title={
+                                          language === "ko"
+                                            ? `${schedule.title} 길찾기 (현재 위치에서)`
+                                            : `${schedule.title} 道案内 (現在地から)`
+                                        }
                                         onClick={(e) => e.stopPropagation()}
                                       >
                                         <Route
@@ -815,7 +798,9 @@ const OkinawaTrip = () => {
                                           className="group-hover/route:rotate-12 transition-transform"
                                         />
                                         <span className="text-[12px] font-semibold tracking-tight">
-                                          {language === "ko" ? "길찾기" : "道案内"}
+                                          {language === "ko"
+                                            ? "길찾기"
+                                            : "道案内"}
                                         </span>
                                       </a>
                                     )}
@@ -827,7 +812,11 @@ const OkinawaTrip = () => {
                                       target="_blank"
                                       rel="noopener noreferrer"
                                       className="px-2.5 py-1.5 rounded-full bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500 hover:text-white dark:hover:bg-amber-500 dark:hover:text-white transition-all flex items-center justify-center shrink-0 gap-1"
-                                      title={language === "ko" ? "공식 홈페이지 확인" : "公式ホームページ"}
+                                      title={
+                                        language === "ko"
+                                          ? "공식 홈페이지 확인"
+                                          : "公式ホームページ"
+                                      }
                                       onClick={(e) => e.stopPropagation()}
                                     >
                                       <span className="text-[12px] font-semibold tracking-tight">
@@ -856,7 +845,11 @@ const OkinawaTrip = () => {
                                         )
                                       }
                                       className="flex-1 bg-transparent border-none focus:ring-0 text-[14px] text-slate-700 dark:text-slate-200 p-0 placeholder:text-slate-400"
-                                      placeholder={language === "ko" ? "목적지 (구글 지도 검색어)" : "目的地 (Googleマップ検索語)"}
+                                      placeholder={
+                                        language === "ko"
+                                          ? "목적지 (구글 지도 검색어)"
+                                          : "目的地 (Googleマップ検索語)"
+                                      }
                                     />
                                   </div>
                                 )}
@@ -877,7 +870,7 @@ const OkinawaTrip = () => {
                                     placeholder="상세 내용을 입력하세요..."
                                   />
                                 ) : (
-                                  <p className="text-[15px] md:text-[16px] text-slate-600 dark:text-slate-300 leading-relaxed break-keep transition-colors whitespace-pre-line">
+                                  <p className="text-[15px] md:text-[16px] text-slate-600 dark:text-slate-300 leading-relaxed break-words transition-colors whitespace-pre-line">
                                     {currentPlan.desc}
                                   </p>
                                 )}
@@ -988,7 +981,7 @@ const OkinawaTrip = () => {
                                               isFlipped,
                                             )
                                           }
-                                          className="bg-white/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 px-2 py-0.5 rounded-full text-[12px] font-medium w-[105px] px-3 py-1.5 rounded-xl bg-white/60 dark:bg-slate-800/60 border-blue-200/50 dark:border-blue-500/30 text-[14px] font-bold shadow-sm focus:ring-1 focus:ring-blue-500 text-center"
+                                          className="bg-white/60 dark:bg-slate-800/60 border border-blue-200/50 dark:border-blue-500/30 px-3 py-1.5 rounded-xl text-[14px] font-bold w-[105px] shadow-sm focus:ring-1 focus:ring-blue-500 text-center focus:outline-none"
                                         />
                                       </div>
                                     ) : (
@@ -1061,7 +1054,11 @@ const OkinawaTrip = () => {
                                           target="_blank"
                                           rel="noopener noreferrer"
                                           className="px-2.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all flex items-center justify-center shrink-0 group/route gap-1"
-                                          title={language === "ko" ? `${schedule.alt.title} 길찾기 (현재 위치에서)` : `${schedule.alt.title} 道案内 (現在地から)`}
+                                          title={
+                                            language === "ko"
+                                              ? `${schedule.alt.title} 길찾기 (현재 위치에서)`
+                                              : `${schedule.alt.title} 道案内 (現在地から)`
+                                          }
                                           onClick={(e) => e.stopPropagation()}
                                         >
                                           <Route
@@ -1118,7 +1115,7 @@ const OkinawaTrip = () => {
                                       placeholder="상세 내용을 입력하세요..."
                                     />
                                   ) : (
-                                    <p className="text-[15px] md:text-[16px] text-slate-600 dark:text-slate-300 leading-relaxed break-keep transition-colors whitespace-pre-line">
+                                    <p className="text-[15px] md:text-[16px] text-slate-600 dark:text-slate-300 leading-relaxed break-words transition-colors whitespace-pre-line">
                                       {schedule.alt.desc}
                                     </p>
                                   )}
@@ -1324,6 +1321,7 @@ const OkinawaTrip = () => {
                       if (newNote !== undefined) setBudgetNote(newNote);
                       // Supabase update logic here
                     }}
+                    onOpenFoodDetail={() => setIsFoodDetailOpen(true)}
                   />
                 </div>
               </div>
@@ -1583,11 +1581,6 @@ const OkinawaTrip = () => {
                       label: "여권 및 신분증",
                       value: "가족 8인 및 유아 여권 지참 필수",
                       icon: <ShieldCheck size={20} />,
-                    },
-                    {
-                      label: "국제운전면허증+면허증+여권",
-                      value: "차량 2대 운전자 필히 지참",
-                      icon: <Car size={20} />,
                     },
                     {
                       label: "Visit Japan Web",
