@@ -184,7 +184,8 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
 
       {/* 테이블 영역: 모바일 최적화 */}
       <div className="bg-white dark:bg-slate-800/30 rounded-2xl md:rounded-3xl overflow-hidden border border-slate-200/60 dark:border-slate-800/50 shadow-sm mb-4">
-        <table className="w-full text-left border-collapse table-fixed">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[400px] text-left border-collapse table-fixed">
           <thead>
             <tr className="bg-slate-50/80 dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-700/50">
               <th className="px-3 md:px-6 py-3 text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider w-[35%]">
@@ -301,6 +302,7 @@ export const BudgetEditor: React.FC<BudgetEditorProps> = ({
             </AnimatePresence>
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* 안내 문구 섹션 */}
