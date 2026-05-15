@@ -7,7 +7,7 @@ export const mockCosts: CostItem[] = [
     price: "2,510,554",
     note: "그랜드 머큐어 오키나와 케이프 잔파 리조트",
   },
-  { item: "택시투어", price: "1,419,840", note: "유이다이렉트 택시투어" },
+  { item: "택시투어", price: "1,450,440", note: "유이다이렉트 택시투어" },
   {
     item: "츄라우미 입장료",
     price: "110,000",
@@ -15,11 +15,10 @@ export const mockCosts: CostItem[] = [
   },
   { item: "파인애플파크", price: "98,368", note: "8인 기준" },
   { item: "만좌모", price: "6,600", note: "8인 기준" },
-  { item: "주유비", price: "100,000", note: "대당 약 5만원 / 2대 예상" },
   { item: "식비", price: "1,040,480", note: "상세내역" },
-  { item: "보험", price: "80,000", note: "8인 예상" },
-  { item: "합계", price: "8,561,392", note: "", isTotal: true },
-  { item: "인당비용", price: "1,070,174", note: "", isPerPerson: true },
+  { item: "보험", price: "60,000", note: "8인 기준" },
+  { item: "합계", price: "", note: "", isTotal: true },
+  { item: "인당비용", price: "", note: "", isPerPerson: true },
 ];
 
 export const mockItinerary: DayItinerary[] = [
@@ -38,9 +37,9 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "13:35",
         title: "나하 공항 도착 및 입국 수속",
-        desc: "나하 공항 도착 후 입국 수속 후 렌트카 버스로 탑승",
+        desc: "나하 공항 도착 후 입국 수속 후 택시투어로 이동하기",
         iconName: "BaggageClaim",
-        travelTime: "입국심사 후 택시투어 버스 탑승하기",
+        travelTime: "입국심사 후 택시투어 탑승하기",
       },
       {
         time: "14:30 - 14:40",
@@ -68,7 +67,7 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "18:15 ~ ",
         title: "리조트 체크인",
-        desc: "그랜드 머큐어 잔파 리조트 체크인 및 휴식. 저녁은 쇼핑한 음식들로 오붓하게 해결",
+        desc: "그랜드 머큐어 잔파 리조트 체크인 및 휴식. 저녁은 마트에서 구매한 음식들로 해결하기",
         iconName: "BedDouble",
         mapQuery: "그랜드 머큐어 오키나와 잔파 곶 리조트",
       },
@@ -82,14 +81,14 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "07:30 - 12:00",
         title: "조식 후 리조트 수영장 & 골프",
-        desc: "조식 후 리조트 수영장에서 물놀이 및 골프 진행",
+        desc: "조식 후 리조트에서 물놀이 및 골프 즐기기",
         iconName: "WavesLadder",
         travelTime: "차로 약 10분 (리조트 인근)",
       },
       {
         time: "12:20 - 13:20",
         title: "점심: 킨치치소바(예약X)",
-        desc: "리조트에서 10분 거리, 바다 뷰가 펼쳐지는 수제 소바 맛집",
+        desc: "바다 뷰가 펼쳐지는 수제 소바 맛집",
         iconName: "Utensils",
         mapQuery: "킨치치소바 오키나와",
         travelTime: "차로 약 40분 (킨치치소바 → 아메리칸 빌리지)",
@@ -97,7 +96,7 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "14:00 - 17:30",
         title: "아메리칸 빌리지",
-        desc: "이온몰 차탄점에 주차 후 거리 산책, 블루씰 아이스크림, 캐릭터 샵 등 쇼핑과 관광",
+        desc: "거리 산책, 블루씰 아이스크림, 잡화 샵 등 쇼핑과 관광하기",
         iconName: "ShoppingBag",
         mapQuery: "이온몰 차탄점 주차장",
         travelTime: "도보 약 10분",
@@ -105,7 +104,7 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "18:00 - 19:30",
         title: "저녁: 카이센 밧텐(예약완료)",
-        desc: "장어덮밥 및 해산물요리. 신선한 해산물을 즐길 수 있는 로컬 맛집",
+        desc: "장어덮밥과 해산물요리. 신선한 해산물을 맛볼 수 있는 식당",
         iconName: "Utensils",
         mapQuery: "Kaisen Batten",
         travelTime: "차로 약 40분 (아메리칸 빌리지 → 잔파 리조트)",
@@ -113,7 +112,7 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "20:10~",
         title: "숙소 복귀 및 휴식",
-        desc: "숙소 도착 후 편안하게 휴식",
+        desc: "숙소 도착 후 편안하게 휴식하기",
         iconName: "Hotel",
         mapQuery: "그랜드 머큐어 오키나와 잔파 곶 리조트",
       },
@@ -127,7 +126,7 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "08:00",
         title: "리조트 조식",
-        desc: "리조트 뷔페 조식으로 여유롭게 하루 시작",
+        desc: "리조트 식당에서 아침 식사 후 만좌모로 이동하기",
         iconName: "Utensils",
         mapQuery: "그랜드 머큐어 오키나와 잔파 곶 리조트",
         travelTime: "차로 약 32분 (잔파 리조트 → 만좌모)",
@@ -135,7 +134,7 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "10:00 - 10:15",
         title: "만좌모 관람",
-        desc: "코끼리 코 모양의 절벽 전망대에서 에메랄드빛 바다 감상.",
+        desc: "코끼리 코 모양의 바다 위 절벽 전망대 구경하기",
         iconName: "Camera",
         mapQuery: "만좌모 주차장",
         travelTime: "차로 약 40분 (만좌모 → 나고 파인애플 파크)",
@@ -143,7 +142,7 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "10:55 - 11:55",
         title: "나고 파인애플 파크",
-        desc: "파인애플 농장 구경 및 시식, 카트 탑승!",
+        desc: "파인애플 농장 구경과 다양한 시식, 카트 탑승하기!",
         iconName: "FerrisWheel",
         mapQuery: "나고 파인애플 파크",
         travelTime: "차로 약 10분 (파인애플 파크 → 점심)",
@@ -151,7 +150,7 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "12:10 - 13:20",
         title: "점심: 하마스시 나고점(예약완료)",
-        desc: "가성비 좋은 회전초밥 맛집에서 점심 식사",
+        desc: "회전초밥 먹기!",
         iconName: "Utensils",
         mapUrl: "https://maps.app.goo.gl/JtYim1L5rNdcu79n7",
         travelTime: "차로 약 20분 (나고 → 추라우미수족관)",
@@ -167,7 +166,7 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "18:10 - 19:30",
         title: "저녁: 야키니쿠 킹 나고점(예약완료)",
-        desc: "무한리필 야키니쿠로 든든한 저녁 식사",
+        desc: "야키니쿠로 든든한 저녁 식사",
         iconName: "Utensils",
         mapQuery: "야키니쿠 킹 나고점",
         travelTime: "차로 약 1시간 (식당 → 잔파 리조트)",
@@ -194,15 +193,15 @@ export const mockItinerary: DayItinerary[] = [
       },
       {
         time: "09:15",
-        title: "체크아웃 및 남부 이동",
-        desc: "리조트 체크아웃 후 나하 남부로 출발",
+        title: "체크아웃",
+        desc: "리조트 체크아웃 후 기노완 메가돈키로 이동하기",
         iconName: "Car",
         travelTime: "차로 약 60분 (잔파 → 기노완)",
       },
       {
-        time: "10:15 - 11:45",
+        time: "10:15 - 11:40",
         title: "메가돈키호테 기노완점",
-        desc: "기념품 쇼핑",
+        desc: "마지막 기념품 쇼핑하기!",
         iconName: "ShoppingBag",
         mapQuery: "메가돈키호테 기노완점",
         travelTime: "차로 약 35분 (돈키호테 → 나하공항)",
@@ -224,7 +223,7 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "약 17:00",
         title: "인천공항 도착",
-        desc: "TW0282편 인천국제공항 도착\n수하물 수취 후 해산!",
+        desc: "TW0282편 인천국제공항 도착\n수하물 수취 후 해산!\n에어랩 반납 필수!",
         iconName: "PlaneLanding",
         mapQuery: "인천국제공항",
       },
