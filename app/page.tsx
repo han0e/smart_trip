@@ -14,7 +14,12 @@ import {
   DayItinerary,
   CostItem,
 } from "@/types/itinerary";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import {
   Car,
   Utensils,
@@ -39,12 +44,29 @@ import {
   ArrowLeft,
 } from "lucide-react";
 
-const OkinawaTrip = () => {
+const High1GolfEvent = () => {
+  const { scrollY } = useScroll();
+  const dateTextColorLight = useTransform(
+    scrollY,
+    [0, 200],
+    ["#1a1a1a", "#ffffff"],
+  );
+  const dayTitleTextColorLight = useTransform(
+    scrollY,
+    [0, 200],
+    ["#475569", "#cbd5e1"],
+  );
+  const eventDescTextColorLight = useTransform(
+    scrollY,
+    [0, 200],
+    ["#64748b", "#cbd5e1"],
+  );
+
   const [itinerary, setItinerary] = useState<DayItinerary[]>(mockItinerary);
   const [costs, setCosts] = useState<CostItem[]>(mockCosts);
-  const [personCount, setPersonCount] = useState(8); // 기본 8인 설정
+  const [personCount, setPersonCount] = useState(4); // 기본 4인 설정 (정선호, 김지복, 정인수, 장대진)
   const [budgetNote, setBudgetNote] = useState(
-    `* 현지 기타 개인 경비는 제외된 예상액입니다.\n* 츄라우미 입장료는 방문 28일 전 예약이 필요합니다.`,
+    `* 감사골프 행사 예상 경비입니다.\n* 그린피, 카트비, 식비 등이 포함된 대략적인 내역입니다.`,
   );
   const [language, setLanguage] = useState<"ko" | "ja">("ko");
 
@@ -53,13 +75,13 @@ const OkinawaTrip = () => {
       setItinerary(mockItinerary);
       setCosts(mockCosts);
       setBudgetNote(
-        `* 현지 기타 개인 경비는 제외된 예상액입니다.\n* 츄라우미 입장료는 방문 28일 전 예약이 필요합니다.`,
+        `* 감사골프 행사 예상 경비입니다.\n* 그린피, 카트비, 식비 등이 포함된 대략적인 내역입니다.`,
       );
     } else {
       setItinerary(mockItineraryJa);
       setCosts(mockCostsJa);
       setBudgetNote(
-        `* 現地のその他の個人的な経費は除外された予想額です。\n* 美ら海水族館の入場料は訪問28日前の予約が必要です。`,
+        `* 感謝ゴルフイベントの予想経費です。\n* グリーンフィ、カート代、食費などが含まれた大まかな内訳です。`,
       );
     }
   }, [language]);
@@ -234,11 +256,11 @@ const OkinawaTrip = () => {
   };
 
   useEffect(() => {
-    // 실시간 오키나와 날씨 가져오기 (Open-Meteo)
+    // 강원도 정선군 사북/고한 (하이원CC 부근) 날씨 정보 가져오기
     const fetchWeather = async () => {
       try {
         const res = await fetch(
-          "https://api.open-meteo.com/v1/forecast?latitude=26.2124&longitude=127.6809&current_weather=true",
+          "https://api.open-meteo.com/v1/forecast?latitude=37.2064&longitude=128.8351&current_weather=true",
         );
         const data = await res.json();
         const code = data.current_weather.weathercode;
@@ -327,7 +349,7 @@ const OkinawaTrip = () => {
 
   return (
     <div
-      className="min-h-screen text-[#1a1a1a] dark:text-slate-200 pb-32 antialiased selection:bg-[#8bd6f5]/60 dark:selection:bg-blue-500/30 relative transition-colors duration-500"
+      className="min-h-screen text-[#1a1a1a] dark:text-slate-200 pb-32 antialiased selection:bg-emerald-500/30 dark:selection:bg-emerald-500/20 relative transition-colors duration-500"
       style={{ fontFamily: '"Pretendard", system-ui, sans-serif' }}
     >
       {/* 베이스 배경색 레이어 (이미지보다 뒤에 위치) */}
@@ -338,43 +360,43 @@ const OkinawaTrip = () => {
         <div
           className="absolute inset-0 bg-cover bg-center scale-105"
           style={{
-            backgroundImage: 'url("/images/hero_bg.jpg")',
+            backgroundImage: 'url("/images/hero_bg.png")',
           }}
         />
-        <div className="absolute inset-0 bg-white/10 dark:bg-black/40 backdrop-blur-[10px]" />
+        <div className="absolute inset-0 bg-black/45 dark:bg-black/70 backdrop-blur-[8px]" />
         <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#f3f6f6] dark:to-[#0a0c10]" />
       </div>
 
       <header className="max-w-6xl mx-auto px-6 pt-32 pb-8 relative z-10">
-        <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 text-[11px] tracking-[0.2em] uppercase mb-6">
-          <span className="w-1.5 h-1.5 bg-slate-600 dark:bg-slate-400 rounded-full"></span>
-          <span>Family Trip Planner</span>
+        <div className="flex items-center gap-2 text-slate-200 dark:text-slate-400 text-[11px] tracking-[0.2em] uppercase mb-6">
+          <span className="w-1.5 h-1.5 bg-slate-200 dark:bg-slate-400 rounded-full"></span>
+          <span>Kona Media Golf Event</span>
         </div>
-        <p className="text-sm md:text-lg font-medium text-slate-700 dark:text-slate-300 mb-3 tracking-tight"></p>
+        <p className="text-sm md:text-lg font-medium text-slate-200 dark:text-slate-300 mb-3 tracking-tight"></p>
         <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-8 break-words relative filter-[drop-shadow(0_2px_12px_rgba(0,60,120,0.15))] flex flex-wrap items-center gap-x-4">
-          <span className="bg-clip-text text-transparent bg-linear-to-b from-[#004c94] to-[#2273bc] dark:from-[#f3f6f6] dark:to-[#c0c3c3]">
-            {language === "ko" ? "오키나와" : "沖縄"}
+          <span className="bg-clip-text text-transparent bg-linear-to-b from-[#a3e635] to-[#10b981] dark:from-[#f3f6f6] dark:to-[#c0c3c3]">
+            {language === "ko" ? "코나미디어" : "(株)コナメディア"}
           </span>{" "}
           <div className="flex items-center gap-[5px]">
             <span className="relative z-10 inline-block text-[#ffffff] dark:text-white">
-              {language === "ko" ? "가족여행" : "家族旅行"}
-              <span className="absolute left-0 -bottom-[3px] md:-bottom-[6px] w-full h-[12px] md:h-[24px] bg-[#8eddff] dark:bg-blue-600/60 -z-10 rounded-sm transition-all"></span>
+              {language === "ko" ? "감사골프 행사" : "感謝ゴルフ行事"}
+              <span className="absolute left-0 -bottom-[3px] md:-bottom-[6px] w-full h-[12px] md:h-[24px] bg-[#a3e635]/80 dark:bg-emerald-600/60 -z-10 rounded-sm transition-all"></span>
             </span>
             <a
-              href="https://weather.yahoo.co.jp/weather/jp/47/9110.html"
+              href="https://search.naver.com/search.naver?query=정선+고한읍+날씨"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center hover:scale-110 transition-transform cursor-pointer text-4xl md:text-6xl"
-              title="현재 오키나와 날씨 확인 (클릭 시 상세 페이지)"
+              title="현재 정선 고한읍 날씨 확인 (네이버 검색)"
             >
               <span className="animate-pulse-subtle">{weatherEmoji}</span>
             </a>
           </div>
         </h1>
-        <p className="text-lg md:text-xl text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed font-light break-words">
+        <p className="text-lg md:text-xl text-slate-200 dark:text-slate-300 max-w-2xl leading-relaxed font-light break-words">
           {language === "ko"
-            ? "2026. 05. 21 - 05. 24 (3박 4일)"
-            : "2026. 05. 21 - 05. 24 (3泊4日)"}
+            ? "2026. 07. 15 - 07. 16 (1박 2일)"
+            : "2026. 07. 15 - 07. 16 (1泊2日)"}
         </p>
       </header>
 
@@ -413,7 +435,7 @@ const OkinawaTrip = () => {
                 {activeSection === day.id && (
                   <motion.span
                     layoutId="active-nav-indicator"
-                    className="absolute bottom-0 left-0 w-full h-[3px] md:h-1 bg-[#8bd6f5] dark:bg-blue-500 rounded-full"
+                    className="absolute bottom-0 left-0 w-full h-[3px] md:h-1 bg-emerald-500 dark:bg-emerald-500 rounded-full"
                     transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
                   />
                 )}
@@ -426,14 +448,14 @@ const OkinawaTrip = () => {
                 <div className="flex items-center gap-1 md:gap-2 ml-1 pr-1 pl-1">
                   <button
                     onClick={addDay}
-                    className="p-1.5 md:p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-full transition-all"
+                    className="p-1.5 md:p-2 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-full transition-all"
                     title={language === "ko" ? "일차 추가" : "日次を追加"}
                   >
                     <Plus size={18} />
                   </button>
                   <button
                     onClick={saveAllData}
-                    className="p-1.5 md:p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-full transition-all"
+                    className="p-1.5 md:p-2 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-full transition-all"
                     title={language === "ko" ? "변경사항 저장" : "変更を保存"}
                   >
                     <Save size={18} />
@@ -476,16 +498,6 @@ const OkinawaTrip = () => {
                     <div className="p-2 space-y-1">
                       <button
                         onClick={() => {
-                          setIsCostModalOpen(true);
-                          setIsNavOpen(false);
-                        }}
-                        className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors"
-                      >
-                        <Wallet size={20} className="text-blue-500" />
-                        {language === "ko" ? "여행 비용" : "旅行費用"}
-                      </button>
-                      <button
-                        onClick={() => {
                           setIsChecklistModalOpen(true);
                           setIsNavOpen(false);
                         }}
@@ -502,12 +514,12 @@ const OkinawaTrip = () => {
                         }}
                         className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-colors ${
                           isEditMode
-                            ? "text-blue-600 bg-blue-50 dark:bg-blue-900/20"
+                            ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20"
                             : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                         }`}
                       >
                         {isEditMode ? (
-                          <Unlock size={20} className="text-blue-500" />
+                          <Unlock size={20} className="text-emerald-500" />
                         ) : (
                           <Lock size={20} />
                         )}
@@ -526,14 +538,6 @@ const OkinawaTrip = () => {
             </AnimatePresence>
           </div>
 
-          <button
-            onClick={() => setLanguage(language === "ko" ? "ja" : "ko")}
-            className="p-1 md:p-1.5 shrink-0 rounded-full transition-all text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white mr-1 font-bold flex items-center justify-center w-6 h-6 md:w-8 md:h-8 text-[13px] md:text-[14px]"
-            aria-label="Toggle Language"
-            title="언어 전환 / 言語切り替え"
-          >
-            {language === "ko" ? "あ" : "Ko"}
-          </button>
           <button
             onClick={toggleTheme}
             className="p-1 md:p-1.5 shrink-0 rounded-full transition-all text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white"
@@ -555,23 +559,31 @@ const OkinawaTrip = () => {
               {/* 좌측: 일자 타이틀 (스크롤 시 고정되도록 sticky 적용) */}
               <div className="lg:col-span-4">
                 <div className="sticky top-32">
-                  <div className="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-3 mb-4 transition-colors">
-                    <MapPin
-                      size={18}
-                      className="text-slate-700 dark:text-slate-300"
-                    />
-                    <h2 className="text-[15px] font-semibold text-slate-700 dark:text-slate-300">
-                      {day.title}
-                    </h2>
-                  </div>
-                  <h3 className="text-3xl font-semibold tracking-tight text-black dark:text-white transition-colors">
+                  <motion.div
+                    style={{
+                      color: isDark ? "#cbd5e1" : dayTitleTextColorLight,
+                    }}
+                    className="flex items-center gap-3 border-b border-white/20 dark:border-slate-800 pb-3 mb-4 transition-colors"
+                  >
+                    <MapPin size={18} color="currentColor" />
+                    <h2 className="text-[15px] font-semibold">{day.title}</h2>
+                  </motion.div>
+                  <motion.h3
+                    style={{ color: isDark ? "#ffffff" : dateTextColorLight }}
+                    className="text-3xl font-semibold tracking-tight"
+                  >
                     {day.date.split(" — ")[0]}
                     {day.date.includes(" — ") && (
-                      <span className="block text-xl font-semibold text-slate-500 dark:text-slate-400 mt-1 tracking-normal">
+                      <motion.span
+                        style={{
+                          color: isDark ? "#94a3b8" : eventDescTextColorLight,
+                        }}
+                        className="block text-xl font-semibold mt-1 tracking-normal"
+                      >
                         {day.date.split(" — ")[1]}
-                      </span>
+                      </motion.span>
                     )}
-                  </h3>
+                  </motion.h3>
                 </div>
               </div>
 
@@ -626,7 +638,7 @@ const OkinawaTrip = () => {
                                             : cardKey,
                                         );
                                       }}
-                                      className="p-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800/50 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all flex items-center justify-center"
+                                      className="p-1.5 rounded-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800/50 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-all flex items-center justify-center"
                                       title="아이콘 변경"
                                     >
                                       <TravelIcon
@@ -702,7 +714,7 @@ const OkinawaTrip = () => {
                                           isFlipped,
                                         )
                                       }
-                                      className="bg-white/60 dark:bg-slate-800/60 border border-blue-200/50 dark:border-blue-500/30 px-3 py-1.5 rounded-xl text-[14px] font-bold w-[105px] shadow-sm focus:ring-1 focus:ring-blue-500 text-center focus:outline-none"
+                                      className="bg-white/60 dark:bg-slate-800/60 border border-emerald-200/50 dark:border-emerald-500/30 px-3 py-1.5 rounded-xl text-[14px] font-bold w-[105px] shadow-sm focus:ring-1 focus:ring-emerald-500 text-center focus:outline-none"
                                     />
                                   </div>
                                 ) : (
@@ -768,7 +780,7 @@ const OkinawaTrip = () => {
                                           isFlipped,
                                         )
                                       }
-                                      className="flex-1 bg-transparent border-b border-blue-500/30 focus:border-blue-500 text-xl md:text-2xl font-bold text-black dark:text-white px-0 py-1"
+                                      className="flex-1 bg-transparent border-b border-emerald-500/30 focus:border-emerald-500 text-xl md:text-2xl font-bold text-black dark:text-white px-0 py-1"
                                       placeholder="일정 제목"
                                     />
                                   ) : (
@@ -780,9 +792,12 @@ const OkinawaTrip = () => {
                                   <div className="flex items-center gap-1.5 shrink-0">
                                     {schedule.mapQuery && (
                                       <a
-                                        href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                                          schedule.mapQuery,
-                                        )}`}
+                                        href={
+                                          schedule.mapUrl ||
+                                          `https://m.map.naver.com/route.nhn?menu=route&ename=${encodeURIComponent(
+                                            schedule.mapQuery,
+                                          )}&pathType=0`
+                                        }
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="px-2.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all flex items-center justify-center shrink-0 group/route gap-1"
@@ -827,10 +842,10 @@ const OkinawaTrip = () => {
                                 </div>
 
                                 {isEditMode && (
-                                  <div className="mt-3 px-4 py-2.5 rounded-2xl bg-slate-100/50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 flex items-center gap-3 group/dest focus-within:border-blue-500/50 focus-within:bg-white dark:focus-within:bg-slate-800 transition-all shadow-sm mb-4">
+                                  <div className="mt-3 px-4 py-2.5 rounded-2xl bg-slate-100/50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 flex items-center gap-3 group/dest focus-within:border-emerald-500/50 focus-within:bg-white dark:focus-within:bg-slate-800 transition-all shadow-sm mb-4">
                                     <MapPin
                                       size={15}
-                                      className="text-slate-400 group-focus-within/dest:text-blue-500 transition-colors shrink-0"
+                                      className="text-slate-400 group-focus-within/dest:text-emerald-500 transition-colors shrink-0"
                                     />
                                     <input
                                       type="text"
@@ -870,7 +885,7 @@ const OkinawaTrip = () => {
                                     placeholder="상세 내용을 입력하세요..."
                                   />
                                 ) : (
-                                  <p className="text-[15px] md:text-[16px] text-slate-600 dark:text-slate-300 leading-relaxed break-words transition-colors whitespace-pre-line">
+                                  <p className="text-[15px] md:text-[16px] text-slate-800 dark:text-slate-200 leading-relaxed break-words transition-colors whitespace-pre-line font-medium">
                                     {currentPlan.desc}
                                   </p>
                                 )}
@@ -906,7 +921,7 @@ const OkinawaTrip = () => {
                                                 : cardKey,
                                             );
                                           }}
-                                          className="p-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800/50 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all flex items-center justify-center"
+                                          className="p-1.5 rounded-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800/50 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-all flex items-center justify-center"
                                           title="아이콘 변경"
                                         >
                                           <TravelIcon
@@ -955,7 +970,7 @@ const OkinawaTrip = () => {
                                                           null,
                                                         );
                                                       }}
-                                                      className={`p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors flex items-center justify-center ${currentPlan.iconName === iconName ? "bg-blue-100 dark:bg-blue-900/50" : ""}`}
+                                                      className={`p-2 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors flex items-center justify-center ${currentPlan.iconName === iconName ? "bg-emerald-100 dark:bg-emerald-900/50" : ""}`}
                                                       title={iconName}
                                                     >
                                                       <TravelIcon
@@ -981,7 +996,7 @@ const OkinawaTrip = () => {
                                               isFlipped,
                                             )
                                           }
-                                          className="bg-white/60 dark:bg-slate-800/60 border border-blue-200/50 dark:border-blue-500/30 px-3 py-1.5 rounded-xl text-[14px] font-bold w-[105px] shadow-sm focus:ring-1 focus:ring-blue-500 text-center focus:outline-none"
+                                          className="bg-white/60 dark:bg-slate-800/60 border border-emerald-200/50 dark:border-emerald-500/30 px-3 py-1.5 rounded-xl text-[14px] font-bold w-[105px] shadow-sm focus:ring-1 focus:ring-emerald-500 text-center focus:outline-none"
                                         />
                                       </div>
                                     ) : (
@@ -1037,7 +1052,7 @@ const OkinawaTrip = () => {
                                             isFlipped,
                                           )
                                         }
-                                        className="flex-1 bg-transparent border-b border-blue-500/30 focus:border-blue-500 text-xl md:text-2xl font-bold text-black dark:text-white px-0 py-1"
+                                        className="flex-1 bg-transparent border-b border-emerald-500/30 focus:border-emerald-500 text-xl md:text-2xl font-bold text-black dark:text-white px-0 py-1"
                                         placeholder="일정 제목"
                                       />
                                     ) : (
@@ -1048,9 +1063,12 @@ const OkinawaTrip = () => {
                                     <div className="flex items-center gap-1.5 shrink-0">
                                       {schedule.alt.mapQuery && (
                                         <a
-                                          href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                                            schedule.alt.mapQuery,
-                                          )}`}
+                                          href={
+                                            schedule.alt.mapUrl ||
+                                            `https://m.map.naver.com/route.nhn?menu=route&ename=${encodeURIComponent(
+                                              schedule.alt.mapQuery,
+                                            )}&pathType=0`
+                                          }
                                           target="_blank"
                                           rel="noopener noreferrer"
                                           className="px-2.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all flex items-center justify-center shrink-0 group/route gap-1"
@@ -1076,10 +1094,10 @@ const OkinawaTrip = () => {
                                   </div>
 
                                   {isEditMode && (
-                                    <div className="mt-3 px-4 py-2.5 rounded-2xl bg-slate-100/50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 flex items-center gap-3 group/dest focus-within:border-blue-500/50 focus-within:bg-white dark:focus-within:bg-slate-800 transition-all shadow-sm mb-4">
+                                    <div className="mt-3 px-4 py-2.5 rounded-2xl bg-slate-100/50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 flex items-center gap-3 group/dest focus-within:border-emerald-500/50 focus-within:bg-white dark:focus-within:bg-slate-800 transition-all shadow-sm mb-4">
                                       <MapPin
                                         size={15}
-                                        className="text-slate-400 group-focus-within/dest:text-blue-500 transition-colors shrink-0"
+                                        className="text-slate-400 group-focus-within/dest:text-emerald-500 transition-colors shrink-0"
                                       />
                                       <input
                                         type="text"
@@ -1115,7 +1133,7 @@ const OkinawaTrip = () => {
                                       placeholder="상세 내용을 입력하세요..."
                                     />
                                   ) : (
-                                    <p className="text-[15px] md:text-[16px] text-slate-600 dark:text-slate-300 leading-relaxed break-words transition-colors whitespace-pre-line">
+                                    <p className="text-[15px] md:text-[16px] text-slate-800 dark:text-slate-200 leading-relaxed break-words transition-colors whitespace-pre-line font-medium">
                                       {schedule.alt.desc}
                                     </p>
                                   )}
@@ -1209,21 +1227,27 @@ const OkinawaTrip = () => {
                                 (nextSchedule.mapQuery ||
                                   nextSchedule.mapUrl) && (
                                   <a
-                                    href={`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(
+                                    href={
                                       (flippedItems[cardKey] &&
-                                      schedule.alt?.mapQuery
-                                        ? schedule.alt.mapQuery
-                                        : schedule.mapQuery) || "",
-                                    )}&destination=${encodeURIComponent(
-                                      (flippedItems[nextCardKey] &&
-                                      nextSchedule.alt?.mapQuery
-                                        ? nextSchedule.alt.mapQuery
-                                        : nextSchedule.mapQuery) || "",
-                                    )}`}
+                                      schedule.alt?.routeUrl
+                                        ? schedule.alt.routeUrl
+                                        : schedule.routeUrl) ||
+                                      `https://m.map.naver.com/route.nhn?menu=route&sname=${encodeURIComponent(
+                                        (flippedItems[cardKey] &&
+                                        schedule.alt?.mapQuery
+                                          ? schedule.alt.mapQuery
+                                          : schedule.mapQuery) || "",
+                                      )}&ename=${encodeURIComponent(
+                                        (flippedItems[nextCardKey] &&
+                                        nextSchedule.alt?.mapQuery
+                                          ? nextSchedule.alt.mapQuery
+                                          : nextSchedule.mapQuery) || "",
+                                      )}`
+                                    }
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="ml-2 p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full transition-colors flex items-center justify-center group/route-btn"
-                                    title="경로 보기 (구글 지도)"
+                                    title="경로 보기 (네이버 지도)"
                                     onClick={(e) => e.stopPropagation()}
                                   >
                                     <Route
@@ -1513,13 +1537,13 @@ const OkinawaTrip = () => {
                           colSpan={3}
                           className="px-4 py-4 text-[15px] font-semibold text-orange-600 dark:text-orange-400"
                         >
-                          총합계
+                          식비 합계
                         </td>
                         <td className="px-4 py-4 text-[15px] text-right tabular-nums font-semibold text-orange-600 dark:text-orange-400">
-                          약 112,000엔
+                          -
                         </td>
                         <td className="px-4 py-4 text-[15px] text-right tabular-nums font-black text-orange-600 dark:text-orange-400 underline decoration-2 underline-offset-4">
-                          약 1,040,480원
+                          약 380,000원
                         </td>
                       </tr>
                     </tbody>
@@ -1578,48 +1602,57 @@ const OkinawaTrip = () => {
                 <div className="space-y-4">
                   {[
                     {
-                      label: "여권 및 신분증",
-                      value: "가족 8인 및 유아 여권 지참 필수",
+                      label: "신분증 지참 필수",
+                      value: "골프장 등록 및 콘도 체크인용 신분증 확인",
                       icon: <ShieldCheck size={20} />,
                     },
                     {
-                      label: "Visit Japan Web",
-                      value: "QR코드 찍어두기!",
-                      icon: <ExternalLink size={20} />,
-                      link: "https://services.digital.go.jp/ko/visit-japan-web/",
+                      label: "골프 복장 및 매너",
+                      value: "단정한 카라 셔츠, 골프웨어 준비",
+                      icon: <Sparkles size={20} />,
                     },
                     {
-                      label: "돼지코 (110v)",
-                      value: "리조트 내 필요 여부 확인",
-                      icon: <Utensils size={20} />,
+                      label: "골프 용품 및 장비",
+                      value: "개인 골프클럽, 골프공, 티, 거리측정기 등",
+                      icon: <Route size={20} />,
                     },
-                  ].map((item, i) => (
-                    <div
-                      key={i}
-                      className="flex items-start gap-4 p-5 bg-white dark:bg-slate-800/50 rounded-3xl border border-green-100/50 dark:border-slate-800 shadow-sm"
-                    >
-                      <div className="mt-1 text-green-500">{item.icon}</div>
-                      <div className="flex-1">
-                        <h4 className="text-[13px] font-semibold text-slate-400 uppercase tracking-widest mb-1">
-                          {item.label}
-                        </h4>
-                        {item.link ? (
-                          <a
-                            href={item.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[15px] font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
-                          >
-                            {item.value} <ExternalLink size={12} />
-                          </a>
-                        ) : (
-                          <p className="text-[15px] font-semibold text-slate-800 dark:text-slate-200">
-                            {item.value}
-                          </p>
-                        )}
+                  ].map(
+                    (
+                      item: {
+                        label: string;
+                        value: string;
+                        icon: React.ReactNode;
+                        link?: string;
+                      },
+                      i,
+                    ) => (
+                      <div
+                        key={i}
+                        className="flex items-start gap-4 p-5 bg-white dark:bg-slate-800/50 rounded-3xl border border-green-100/50 dark:border-slate-800 shadow-sm"
+                      >
+                        <div className="mt-1 text-green-500">{item.icon}</div>
+                        <div className="flex-1">
+                          <h4 className="text-[13px] font-semibold text-slate-400 uppercase tracking-widest mb-1">
+                            {item.label}
+                          </h4>
+                          {item.link ? (
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[15px] font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                            >
+                              {item.value} <ExternalLink size={12} />
+                            </a>
+                          ) : (
+                            <p className="text-[15px] font-semibold text-slate-800 dark:text-slate-200">
+                              {item.value}
+                            </p>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ),
+                  )}
                 </div>
 
                 <div className="mt-8 p-5 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100/50 dark:border-blue-900/20 space-y-2">
@@ -1646,15 +1679,15 @@ const OkinawaTrip = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <span className="px-2.5 py-1 rounded-[6px] bg-black dark:bg-white text-white dark:text-black text-[13px] font-black tracking-tighter uppercase">
-                Okinawa
+              <span className="px-2.5 py-1 rounded-[6px] bg-black dark:bg-white text-white dark:text-black text-[13px] font-black tracking-tighter">
+                KONAMEDIA
               </span>
               <span className="text-xs font-semibold text-slate-400 tracking-tight">
-                2026 Family Trip Planner
+                2026 Kona Media Golf Event
               </span>
             </div>
             <p className="text-sm text-slate-500 font-medium">
-              &copy; 오키나와 여행 가이드@2026, Hanyeong Kim
+              &copy; 하이원CC 감사골프 행사 가이드@2026
             </p>
           </div>
           <div className="flex flex-wrap gap-2.5">
@@ -1675,4 +1708,4 @@ const OkinawaTrip = () => {
   );
 };
 
-export default OkinawaTrip;
+export default High1GolfEvent;

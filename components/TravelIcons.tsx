@@ -21,7 +21,8 @@ import {
   Landmark,
   Compass,
   Music,
-  Waves
+  Waves,
+  Flag
 } from "lucide-react";
 
 // Custom Dolphin SVG Path (provided by User)
@@ -84,7 +85,7 @@ export const TRAVEL_ICON_NAMES = [
   "PlaneTakeoff", "BaggageClaim", "Car", "ShoppingCart", "ShoppingBag",
   "BedDouble", "WavesLadder", "Utensils", "Camera", "Sailboat",
   "FerrisWheel", "Fish", "Hotel", "PlaneLanding",
-  "MapPin", "Coffee", "Beer", "Trees", "Landmark", "Compass", "Music", "Waves"
+  "MapPin", "Coffee", "Beer", "Trees", "Landmark", "Compass", "Music", "Waves", "Flag"
 ];
 
 export const TravelIcon = ({
@@ -124,6 +125,7 @@ export const TravelIcon = ({
     Compass,
     Music,
     Waves,
+    Flag,
   };
   const IconComponent = icons[name];
   return IconComponent ? <IconComponent {...props} /> : null;

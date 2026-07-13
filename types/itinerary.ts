@@ -8,6 +8,7 @@ export interface ScheduleAlt {
   iconName?: string;
   mapQuery?: string;
   mapUrl?: string;
+  routeUrl?: string;
   websiteUrl?: string;
   prevTravelTime?: string;
   nextTravelTime?: string;
@@ -22,6 +23,7 @@ export interface ScheduleItem {
   travelTime?: string;
   mapQuery?: string;
   mapUrl?: string;
+  routeUrl?: string;
   websiteUrl?: string;
   tags?: string[];
   alt?: ScheduleAlt;
