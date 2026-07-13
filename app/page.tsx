@@ -374,7 +374,7 @@ const High1GolfEvent = () => {
         </div>
         <p className="text-sm md:text-lg font-medium text-slate-200 dark:text-slate-300 mb-3 tracking-tight"></p>
         <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-8 break-words relative filter-[drop-shadow(0_2px_12px_rgba(0,60,120,0.15))] flex flex-wrap items-center gap-x-4">
-          <span className="bg-clip-text text-transparent bg-linear-to-b from-[#a3e635] to-[#10b981] dark:from-[#f3f6f6] dark:to-[#c0c3c3]">
+          <span className="bg-clip-text text-transparent bg-linear-to-b from-[#a3e635] to-[#10b981]">
             {language === "ko" ? "코나미디어" : "(株)コナメディア"}
           </span>{" "}
           <div className="flex items-center gap-[5px]">
@@ -1602,18 +1602,18 @@ const High1GolfEvent = () => {
                 <div className="space-y-4">
                   {[
                     {
-                      label: "신분증 지참 필수",
-                      value: "골프장 등록 및 콘도 체크인용 신분증 확인",
-                      icon: <ShieldCheck size={20} />,
+                      label: "개인 선케어 및 보호장구",
+                      value: "자외선 차단 선크림, 골프 모자, 선글라스, 팔토시 등",
+                      icon: <Sun size={20} />,
                     },
                     {
-                      label: "골프 복장 및 매너",
-                      value: "단정한 카라 셔츠, 골프웨어 준비",
+                      label: "골프 소모품 준비",
+                      value: "넉넉한 골프공, 골프장갑, 티(Tee), 볼마커 등",
                       icon: <Sparkles size={20} />,
                     },
                     {
-                      label: "골프 용품 및 장비",
-                      value: "개인 골프클럽, 골프공, 티, 거리측정기 등",
+                      label: "골프 클럽 및 거리측정기",
+                      value: "개인 골프클럽 백, 레인지 파인더(거리측정기) 등",
                       icon: <Route size={20} />,
                     },
                   ].map(
@@ -1657,17 +1657,11 @@ const High1GolfEvent = () => {
 
                 <div className="mt-8 p-5 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100/50 dark:border-blue-900/20 space-y-2">
                   <p className="text-[15px] text-blue-700/80 dark:text-blue-400/80 leading-relaxed font-medium">
-                    * 긴급 연락처 (영사관): +81-3-3452-7611
+                    * 하이원CC 프런트: 033-590-7300
                   </p>
-                  <a
-                    href="https://0404.go.kr/bbs/contsPst/MST0000000000110/10/detail#:~:text=%EC%98%81%EC%82%AC%EC%95%88%EC%A0%84%EC%BD%9C%EC%84%BC%ED%84%B0%20%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1,%EB%A5%BC%20%EC%A0%9C%EA%B3%B5%EB%B0%9B%EC%9C%BC%EC%8B%A4%20%EC%88%98%20%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[15px] text-blue-600 dark:text-blue-400 font-semibold hover:underline flex items-center gap-1"
-                  >
-                    * 영사안전콜센터 - 카카오톡 채널 추가{" "}
-                    <ExternalLink size={10} />
-                  </a>
+                  <p className="text-[15px] text-blue-700/80 dark:text-blue-400/80 leading-relaxed font-medium">
+                    * 하이원리조트 대표번호: 1588-7789
+                  </p>
                 </div>
               </div>
             </motion.div>
