@@ -42,7 +42,88 @@ import {
   Trash2,
   Route,
   ArrowLeft,
+  Copy,
+  Check,
 } from "lucide-react";
+
+interface CopyableAddressProps {
+  address: string;
+  fullText: string;
+}
+
+const CopyableAddress: React.FC<CopyableAddressProps> = ({ address, fullText }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      await navigator.clipboard.writeText(address);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy address:", err);
+    }
+  };
+
+  return (
+    <span
+      onClick={handleCopy}
+      className="inline-flex items-center gap-1 cursor-pointer text-slate-800 hover:text-emerald-600 dark:text-slate-200 dark:hover:text-emerald-400 transition-colors font-medium align-middle group relative"
+      title="클릭하여 주소 복사"
+    >
+      <span className="group-hover:underline decoration-dashed underline-offset-4">
+        {fullText}
+      </span>
+      {copied ? (
+        <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold ml-1 animate-pulse">
+          ✓ 복사 완료
+        </span>
+      ) : (
+        <Copy size={11} className="opacity-50 group-hover:opacity-100 transition-opacity shrink-0 ml-1" />
+      )}
+    </span>
+  );
+};
+
+const renderDesc = (desc: string) => {
+  if (!desc) return null;
+
+  // Regex to match address in parentheses, e.g. (강원 정선군 ...) or (서울 ...)
+  const addressRegex = /\((서울|인천|경기|강원|충북|충남|대전|세종|전북|전남|광주|경북|경남|대구|울산|부산|제주)\s+([^)]+)\)/g;
+
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match;
+
+  const rx = new RegExp(addressRegex);
+  while ((match = rx.exec(desc)) !== null) {
+    const matchIndex = match.index;
+    const fullMatch = match[0];
+    const region = match[1];
+    const rest = match[2];
+    const address = `${region} ${rest}`;
+
+    if (matchIndex > lastIndex) {
+      parts.push(desc.substring(lastIndex, matchIndex));
+    }
+
+    parts.push(
+      <CopyableAddress
+        key={`${matchIndex}-${address}`}
+        address={address}
+        fullText={fullMatch}
+      />
+    );
+
+    lastIndex = rx.lastIndex;
+  }
+
+  if (lastIndex < desc.length) {
+    parts.push(desc.substring(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : desc;
+};
 
 const High1GolfEvent = () => {
   const { scrollY } = useScroll();
@@ -886,7 +967,7 @@ const High1GolfEvent = () => {
                                   />
                                 ) : (
                                   <p className="text-[15px] md:text-[16px] text-slate-800 dark:text-slate-200 leading-relaxed break-words transition-colors whitespace-pre-line font-medium">
-                                    {currentPlan.desc}
+                                    {renderDesc(currentPlan.desc)}
                                   </p>
                                 )}
                               </div>
@@ -1134,7 +1215,7 @@ const High1GolfEvent = () => {
                                     />
                                   ) : (
                                     <p className="text-[15px] md:text-[16px] text-slate-800 dark:text-slate-200 leading-relaxed break-words transition-colors whitespace-pre-line font-medium">
-                                      {schedule.alt.desc}
+                                      {renderDesc(schedule.alt.desc)}
                                     </p>
                                   )}
                                 </div>

@@ -26,25 +26,25 @@ export const mockItinerary: DayItinerary[] = [
         mapUrl:
           "https://map.naver.com/p/search/문정역SKV1/place/1801652647?c=15.00,0,0,0,dh",
         routeUrl:
-          "https://map.naver.com/p/directions/3znE4J,2AIHVy,문정역SKV1,1801652647,PLACE_POI/3AxVVo,2AvvaC,하이원CC,19713785,PLACE_POI/-/car?c=9.00,0,0,0,dh",
-        travelTime: "차로 약 3시간",
+          "https://map.naver.com/p/directions/3znE4J,2AIHVy,%EB%AC%B8%EC%A0%95%EC%97%ADSKV1,1801652647,PLACE_POI/3AwxR6,2AxPJE,%ED%95%98%EC%9D%B4%EC%9B%90%20%EB%A7%8C%ED%95%AD%EA%B3%A4%EB%93%9C%EB%A0%88%EB%8B%AD%EC%A7%91,37165077,PLACE_POI/-/car?c=14.00,0,0,0,dh",
+        travelTime: "차로 약 3시간(SKV1 → 만항곤드레닭집)",
       },
       {
-        time: "11:00",
-        title: "하이원CC 도착 및 중식",
-        desc: "하이원CC 클럽하우스 또는 인근 식당에서 점심식사 (식당 미정)",
+        time: "10:40",
+        title: "점심 식사 : 만항곤드레닭집",
+        desc: "만항곤드레닭집\n(강원 정선군 사북읍 사북1길 7-1)",
         iconName: "Utensils",
-        mapQuery: "하이원CC",
+        mapQuery: "만항곤드레닭집",
         mapUrl:
-          "https://map.naver.com/p/search/하이원CC/place/19713785?c=15.00,0,0,0,dh",
+          "https://map.naver.com/p/search/만항곤드레닭집/place/15023348?c=15.00,0,0,0,dh",
         routeUrl:
-          "https://map.naver.com/p/search/하이원CC/place/19713785?c=15.00,0,0,0,dh",
-        travelTime: "라운딩 준비",
+          "https://map.naver.com/p/directions/3AxVVo,2AvvaC,%ED%95%98%EC%9D%B4%EC%9B%90CC,19713785,PLACE_POI/3AwxR6,2AxPJE,%ED%95%98%EC%9D%B4%EC%9B%90%20%EB%A7%8C%ED%95%AD%EA%B3%A4%EB%93%9C%EB%A0%88%EB%8B%AD%EC%A7%91,37165077,PLACE_POI/-/car?c=12.00,0,0,0,dh",
+        travelTime: "차로 약 8분(식당 → 하이원CC)",
       },
       {
         time: "12:42",
         title: "하이원CC 티오프 (마운틴코스)",
-        desc: "1일차 골프 라운딩 (강원 정선군 고한읍 고한리 418)",
+        desc: "1일차 골프 라운딩\n(강원 정선군 고한읍 고한리 418)",
         iconName: "Flag",
         mapQuery: "하이원CC",
         mapUrl:
@@ -62,17 +62,20 @@ export const mockItinerary: DayItinerary[] = [
         mapUrl:
           "https://map.naver.com/p/search/하이원리조트%20마운틴콘도/place/15796056?c=15.00,0,0,0,dh",
         routeUrl:
-          "https://map.naver.com/p/directions/3AxxQ3,2AvpJC,%ED%95%98%EC%9D%B4%EC%9B%90%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%EB%A7%88%EC%9A%B4%ED%8B%B4%EC%BD%98%EB%8F%84,15796056,PLACE_POI/3AxxDQ,2Axw2N,%EC%B4%88%EC%9B%90%EC%A0%95%EC%9C%A1%EC%A0%90%EC%8B%9D%EB%8B%B9,624295664,PLACE_POI/-/car?c=13.00,0,0,0,dh",
-        travelTime: "차로 약 10분",
+          "https://map.naver.com/p/directions/3AxxQ3,2AvpJC,%ED%95%98%EC%9D%B4%EC%9B%90%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%EB%A7%88%EC%9A%B4%ED%8B%B4%EC%BD%98%EB%8F%84,15796056,PLACE_POI/3Aynco,2AwJxE,%EC%97%B0%ED%83%84%EA%B5%AC%EC%9D%B4%EB%8B%A4%EC%9B%90,37654112,PLACE_POI/-/car?c=13.00,0,0,0,dh",
+        travelTime: "차로 약 15분(콘도 → 식당)",
       },
       {
         time: "18:30",
-        title: "저녁 식사: 초원정육점식당 (미정)",
-        desc: "한우 및 삼겹살 등으로 저녁 식사 및 화합의 시간\n(강원 정선군 고한읍 지장천로 853)",
+        title: "저녁 식사 : 연탄구이다원",
+        desc: "연탄구이다원\n(강원 정선군 고한읍 고한4길 32-1)",
         iconName: "Utensils",
-        mapQuery: "초원정육점식당",
+        mapQuery: "연탄구이 다원",
         mapUrl:
-          "https://map.naver.com/p/search/%EC%B4%88%EC%9B%90%EC%A0%95%EC%9C%A1%EC%A0%90%EC%8B%9D%EB%8B%B9/place/624295664?c=15.00,0,0,0,dh&placePath=%2Fhome%3Fbk_query%3D%EC%B4%88%EC%9B%90%EC%A0%95%EC%9C%A1%EC%A0%90%EC%8B%9D%EB%8B%B9%26entry%3Dbmp%26from%3Dmap%26fromPanelNum%3D2%26timestamp%3D202607131200%26locale%3Dko%26svcName%3Dmap_pcv5%26searchText%3D%EC%B4%88%EC%9B%90%EC%A0%95%EC%9C%A1%EC%A0%90%EC%8B%9D%EB%8B%B9",
+          "https://map.naver.com/p/search/%EC%97%B0%ED%83%84%EA%B5%AC%EC%9D%B4%20%EB%8B%A4%EC%9B%90?c=15.00,0,0,0,dh",
+        routeUrl:
+          "https://map.naver.com/p/directions/3Aynco,2AwJxE,%EC%97%B0%ED%83%84%EA%B5%AC%EC%9D%B4%EB%8B%A4%EC%9B%90,37654112,PLACE_POI/3AxVVo,2AvvaC,%ED%95%98%EC%9D%B4%EC%9B%90%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%EB%A7%88%EC%9A%B4%ED%8B%B4%EC%BD%98%EB%8F%84,15796056,PLACE_POI/-/car?c=13.00,0,0,0,dh",
+        travelTime: "차로 약 11분(식당 → 콘도)",
       },
     ],
   },
@@ -94,8 +97,8 @@ export const mockItinerary: DayItinerary[] = [
       },
       {
         time: "06:30",
-        title: "조식",
-        desc: "클럽하우스 또는 엄니밥상(백반정식)\n(강원 정선군 고한읍 고한로 34 엄니밥상)",
+        title: "아침 식사 : 엄니밥상",
+        desc: "엄니밥상\n(강원 정선군 고한읍 고한로 34)",
         iconName: "Utensils",
         mapQuery: "엄니밥상",
         mapUrl:
@@ -107,7 +110,7 @@ export const mockItinerary: DayItinerary[] = [
       {
         time: "07:55",
         title: "하이원CC 티오프 (마운틴코스)",
-        desc: "2일차 골프 라운딩 (강원 정선군 고한읍 고한리 418)",
+        desc: "2일차 골프 라운딩\n(강원 정선군 고한읍 고한리 418)",
         iconName: "Flag",
         mapQuery: "하이원CC",
         mapUrl:
@@ -118,18 +121,18 @@ export const mockItinerary: DayItinerary[] = [
       },
       {
         time: "13:00",
-        title: "점심 식사: 정선메밀촌막국수 (미정)",
-        desc: "막국수 및 감자전 등으로 점심 식사\n(강원 정선군 고한읍 고한로 79)",
+        title: "점심 식사 : 정선메밀촌막국수",
+        desc: "정선메밀촌막국수\n(강원 정선군 고한읍 고한로 79)",
         iconName: "Utensils",
         mapQuery: "정선메밀촌막국수",
         mapUrl:
-          "https://map.naver.com/p/search/강원 정선군 고한읍 고한로 79/place/13159981?c=15.00,0,0,0,dh",
+          "https://map.naver.com/p/search/%EC%A0%95%EC%84%A0%EB%A9%94%EB%B0%80%EC%B4%8C%EB%A7%89%EA%B5%AD%EC%88%98?c=15.00,0,0,0,dh",
         routeUrl:
-          "https://map.naver.com/p/directions/3Axy9V,2AvpgC,강원 정선군 고한읍 고한로 79,13159981,PLACE_POI/3znE4J,2AIHVy,문정역SKV1,1801652647,PLACE_POI/-/car?c=9.00,0,0,0,dh",
+          "https://map.naver.com/p/directions/3Axxy8,2AvpW6,정선메밀촌막국수,13159981,PLACE_POI/3znE4J,2AIHVy,문정역SKV1,1801652647,PLACE_POI/-/car?c=9.00,0,0,0,dh",
         travelTime: "서울 방향으로 출발",
       },
       {
-        time: "15:00",
+        time: "16:30 ~ 18:00",
         title: "서울 도착 후 뒷풀이 또는 귀가",
         desc: "서울 도착 후 일정 정리 및 해산",
         iconName: "Car",
